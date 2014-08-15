@@ -1,4 +1,3 @@
-
 rm(list=ls(all=TRUE))
 
 devtools::install_github("dapr12/fda.classification")
@@ -175,12 +174,7 @@ pcaobj3 <- pcafd( fdaobjMale, nharm=3, Plot=TRUE)
 
 
 ## PCA - PCA Functional Data Analysis
-pcaobj2 <- pcafd( fdaNox, nharm=2, Plot=TRUE  )
-
-
-# Plot Var-Cov Matrix
-#contour(Var, xlab="Time", ylab="Time")
-#persp(1:39, 1:39, Var,theta=-45, phi=25, r=3, expand = 0.5, ticktype='detailed')
+pcaobj2 <- pcafd( fdaNox, nharm=4, Plot=TRUE  )
 
 
 ###################################################
@@ -269,3 +263,4 @@ par(mfrow = c(2,1))
 
 matplot(simulation1$rangetime,simulation1$simulation,type="l",col =color,xlab="",ylab="x(t)",main="Observations",lty=1)
 matplot(simulation2$rangetime,simulation2$simulation,type="l",col =color,xlab="",ylab="x(t)",main="Observations",lty=1)
+
