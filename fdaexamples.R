@@ -1,4 +1,9 @@
 
+rm(list=ls(all=TRUE))
+
+devtools::install_github("dapr12/fda.classification")
+library('fda.classification')
+
 ## Growth Data Curves
 
 par(mfrow=c(1,2)) 
@@ -70,8 +75,10 @@ plot(NoxNoOutliers)
 
 ### Smooth and CV
 Smoothfda<- smoothfda(fdaobjMale, bandwidth=0.500019, degree=1)
-matplot(Smoothfda$YSmooth, type="l",ylab="x(t)",main="Observations")
+matplot(Smoothfda$YSmooth, type="l", xlab="Time",ylab="x(t)",main="Male Growth Data - Mean and Median")
 lines(Smoothfda$Mean,col="black",lwd = 4) 
+Mfd<-medianfd(Smoothfda)
+lines(Mfd$median,col="red",lwd = 4) 
 
 
 ##############################
@@ -80,6 +87,7 @@ lines(Smoothfda$Mean,col="black",lwd = 4)
 
 Int<-c(1,2)
 h<- hselect(NoxNoOutliers, 1, Int)
+print(h)
 
 SmoothNox<- smoothfda(fdaNox, bandwidth= h, degree=1)
 matplot(SmoothNox$YSmooth, type="l",ylab="x(t)",main="Observations")
@@ -99,13 +107,13 @@ matplot(FderivNox$data, type="l")
 #######################################
 
 #Computing the Median
-Mfd<-Medianfd(Smoothfda)
+Mfd<-medianfd(Smoothfda)
 
 # Plotting the Median
 par(mfrow=c(1,2))
-matplot(Smoothfda$YSmooth, type="l",main="Mean")
+matplot(Smoothfda$YSmooth, type="l",main="Mean - Male Growth Data")
 lines(Smoothfda$Mean,col="black",lwd = 4) 
-matplot(Smoothfda$YSmooth, type="l", main="Median")
+matplot(Smoothfda$YSmooth, type="l", main="Median- Male Growth Data")
 lines(Mfd$median, col="red",lwd = 4) 
 
 
@@ -118,7 +126,7 @@ matplot(SmoothNox$YSmooth, type="l",ylab="x(t)",main="Observations")
 lines(SmoothNox$Mean,col="black",lwd = 4) 
 
 #Computing the Median
-MfdNox<-Medianfd(SmoothNox)
+MfdNox<-medianfd(SmoothNox)
 
 # Plotting the Median
 par(mfrow=c(1,2))
@@ -170,8 +178,6 @@ pcaobj3 <- pcafd( fdaobjMale, nharm=3, Plot=TRUE)
 pcaobj2 <- pcafd( fdaNox, nharm=2, Plot=TRUE  )
 
 
-# Number of Harmonics 
-
 # Plot Var-Cov Matrix
 #contour(Var, xlab="Time", ylab="Time")
 #persp(1:39, 1:39, Var,theta=-45, phi=25, r=3, expand = 0.5, ticktype='detailed')
@@ -213,7 +219,6 @@ Classifmplsr <- classfd(Classlearn, train, test)
 # Perfect FDA  Discriminating 
 ##############################
 
-#library(sampling)
 
 AllGwdprotein<-cbind(Gwdprotein$Group1,Gwdprotein$Group2)
 fdaobjProteine<-fdaclass(AllGwdprotein,Gwdprotein$Time)
