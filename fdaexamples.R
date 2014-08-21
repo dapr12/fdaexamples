@@ -15,10 +15,8 @@ grid(NA, 20)
 
 par(mfrow=c(1,2), font.lab=3, font.axis=1) 
 matplot(Gwdprotein$Time, Gwdprotein$Group1, type="l", main="Wheat Data Set", sub="Group 1", xlab="Wave length(nm)", ylab=" d(NIR spectra ( log(1/R) ),1)")
-abline(h= 0)
 
 matplot(Gwdprotein$Time, Gwdprotein$Group2, type="l", main="Wheat Data Set", sub="Group 2", xlab="Wave length(nm)", ylab=" d(NIR spectra ( log(1/R) ),1) ")
-abline(h= 0)
 
 
 ## Nox Data Curves
